@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: documind-backend
+
+  # ???? ??
+  profiles:
+    active: local
+
+  # PostgreSQL ??
+  datasource:
+    url: jdbc:postgresql://localhost:5432/documind
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  # JPA ??
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 100
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  # Redis ??
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+  # ?? ??? ??
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+# Server ??
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-stacktrace: on_param
+
+# Logging ??
+logging:
+  level:
+    com.documind: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
