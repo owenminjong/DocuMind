@@ -24,17 +24,30 @@ repositories {
 	mavenCentral()
 }
 
+ext {
+	set('flywayVersion', '10.21.0')
+}
+
 dependencies {
 	// Spring Boot Starters
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
-	implementation 'org.springframework.boot:spring-boot-starter-webflux'  // Groq API 호출용
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-flyway'
+
+	// Flyway 버전 명시
+	implementation "org.flywaydb:flyway-core:${flywayVersion}"
+	runtimeOnly "org.flywaydb:flyway-database-postgresql:${flywayVersion}"
 
 	// Database
 	runtimeOnly 'org.postgresql:postgresql'
 	implementation 'com.pgvector:pgvector:0.1.4'
+
+//	// Flyway
+//	implementation 'org.flywaydb:flyway-core:10.21.0'  // ← 버전 명시
+//	runtimeOnly 'org.flywaydb:flyway-database-postgresql:10.21.0'  // ← 추가
 
 	// PDF 파싱
 	implementation 'org.apache.pdfbox:pdfbox:3.0.1'
@@ -42,11 +55,7 @@ dependencies {
 	// Markdown 파싱
 	implementation 'com.vladsch.flexmark:flexmark-all:0.64.8'
 
-	// Flyway (DB 마이그레이션)
-	implementation 'org.flywaydb:flyway-core'
-	implementation 'org.flywaydb:flyway-database-postgresql'
-
-	// Lombok (중복 제거)
+	// Lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
