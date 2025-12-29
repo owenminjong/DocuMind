@@ -29,8 +29,9 @@ public class DocumentChunk {
 
     private Integer tokenCount;
 
-    @Column(columnDefinition = "vector(384)")
-    private String embedding;
+    // ⭐ embedding 컬럼 완전 제거 (나중에 추가)
+    // @Column(columnDefinition = "vector(384)")
+    // private String embedding;
 
     private LocalDateTime createdAt;
 
