@@ -22,6 +22,7 @@ public class DocumentService {
     private final DocumentChunkRepository chunkRepository;
     private final DocumentParserService parserService;
     private final ChunkService chunkService;
+    private final EmbeddingService embeddingService;
 
     /**
      * 문서 업로드 및 저장
@@ -64,6 +65,17 @@ public class DocumentService {
                     .build();
 
             chunkRepository.save(chunk);
+
+            // 6. 임베딩 생성 및 업데이트
+            try {
+                List<Double> embedding = embeddingService.generateEmbedding(chunkText);
+                String embeddingStr = embeddingService.embeddingToString(embedding);
+                chunkRepository.updateEmbedding(chunk.getId(), embeddingStr);
+
+                log.info("청크 {} 임베딩 완료", i);
+            } catch (Exception e) {
+                log.error("청크 {} 임베딩 실패: {}", i, e.getMessage());
+            }
         }
 
         log.info("청크 저장 완료: {} 개", chunks.size());
